@@ -47,9 +47,13 @@ describe("Block Tags", () => {
   before("Get initial balance, nonce and block number", async() => {
     const { accounts, web3 } = services;
 
-    const balance = await web3.eth.getBalance(accounts[0]);
-    const nonce = await web3.eth.getTransactionCount(accounts[0]);
-    const blockNumber = await web3.eth.getBlockNumber();
+    const results = [
+      web3.eth.getBalance(accounts[0]),
+      web3.eth.getTransactionCount(accounts[0]),
+      web3.eth.getBlockNumber()
+    ];
+
+    const [balance, nonce, blockNumber] = await Promise.all(results);
 
     Object.assign(initialState, {
       balance,
@@ -88,8 +92,8 @@ describe("Block Tags", () => {
 
     // Check that the balance incremented with the block number, just to be sure.
     testBalance = await web3.eth.getBalance(accounts[0], blockNumber + 1);
-    let initialBalanceInEther = parseFloat(web3.utils.fromWei(balance, "ether"));
-    let balanceInEther = parseFloat(web3.utils.fromWei(testBalance, "ether"));
+    const initialBalanceInEther = parseFloat(web3.utils.fromWei(balance, "ether"));
+    const balanceInEther = parseFloat(web3.utils.fromWei(testBalance, "ether"));
     assert(balanceInEther < initialBalanceInEther);
   });
 

@@ -37,7 +37,7 @@ async function compile(mainContractName, contractFileNames = [], contractPath) {
  * @param {String} abi  contract ABI
  * @param {String} bytecode  contract bytecode
  * @param {Object} web3 Web3 interface
- * @returns {Object} context: abi, accounts, bytecode, contract, instance
+ * @returns {Object} context: abi, accounts, bytecode, contract, instance, sources
  */
 async function deploy(abi, bytecode, sources, web3) {
   const contract = new web3.eth.Contract(abi);

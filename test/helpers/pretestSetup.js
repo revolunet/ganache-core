@@ -4,11 +4,12 @@ const Ganache = require(process.env.TEST_BUILD
 const Web3 = require("web3");
 
 const { join } = require("path");
-const { compileAndDeploy } = require("./compileDeploy");
+const { compileAndDeploy } = require("./compileAndDeploy");
 
 const setUp = (mainContractName = "", subContractNames = [], options, contractPath = "../contracts/") => {
   const context = {};
 
+  // Using an arrow function for this hook will delete the Mocha context used for timeout
   before("Setting up web3 and contract", async function() {
     this.timeout(10000);
 
