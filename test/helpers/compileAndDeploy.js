@@ -18,7 +18,8 @@ async function compile(mainContractName, contractFileNames = [], contractPath) {
 
   const sources = Object.assign({}, ...contractSources);
 
-  const { contracts } = solc.compile({ sources });
+  // Second parameter of `1` configures solc for opitimized compiling
+  const { contracts } = solc.compile({ sources }, 1);
 
   const _mainContractName = mainContractName.replace(/\.sol$/i, "");
   const compiledMainContract = contracts[`${_mainContractName}.sol:${_mainContractName}`];

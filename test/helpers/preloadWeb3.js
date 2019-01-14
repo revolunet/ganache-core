@@ -4,20 +4,21 @@ const Ganache = require(process.env.TEST_BUILD
 const Web3 = require("web3");
 
 const preloadWeb3 = async(options = {}) => {
-  before("Setting up web3", async() => {
+  let context = {};
+  before("Setting up web3", async function() {
+    this.timeout(10000);
     const provider = Ganache.provider(options);
     const web3 = new Web3(provider);
     const accounts = await web3.eth.getAccounts();
 
-    return Object.assign(
-      {},
-      {
-        accounts,
-        provider,
-        web3
-      }
-    );
+    Object.assign(context, {
+      accounts,
+      provider,
+      web3
+    });
   });
+
+  return context;
 };
 
 module.exports = {

@@ -13,7 +13,7 @@ const { setUp } = require("./helpers/pretestSetup");
 // This removes solc's overzealous uncaughtException event handler.
 process.removeAllListeners("uncaughtException");
 
-describe.skip("Debug", function() {
+describe("Debug", function() {
   const mainContract = "DebugContract";
   const contractFilenames = [];
   const contractPath = "../contracts/debug/";
@@ -22,7 +22,7 @@ describe.skip("Debug", function() {
   const services = setUp(mainContract, contractFilenames, options, contractPath);
 
   const gas = 3141592;
-  var hashToTrace = null;
+  let hashToTrace = null;
   let expectedValueBeforeTrace = "1234";
   /*
   var provider;
@@ -107,7 +107,6 @@ describe.skip("Debug", function() {
     }
 
     const { op, gasCost, pc, storage } = structLogs[structLogs.length - 1];
-    console.log(structLogs[structLogs.length - 1]);
 
     assert.strictEqual(op, "STOP");
     assert.strictEqual(gasCost, 1);
