@@ -1,19 +1,12 @@
-// const Web3 = require("web3");
 const assert = require("assert");
 const { send } = require("./helpers/rpc");
-// const Ganache = require(process.env.TEST_BUILD
-// ? "../build/ganache.core." + process.env.TEST_BUILD + ".js"
-// : "../index.js");
-// const fs = require("fs");
-// const path = require("path");
-// const solc = require("solc");
 const { setUp } = require("./helpers/pretestSetup");
 
 // Thanks solc. At least this works!
 // This removes solc's overzealous uncaughtException event handler.
 process.removeAllListeners("uncaughtException");
 
-describe("Debug", function() {
+describe("Debug", () => {
   const mainContract = "DebugContract";
   const contractFilenames = [];
   const contractPath = "../contracts/debug/";
@@ -24,50 +17,8 @@ describe("Debug", function() {
   const gas = 3141592;
   let hashToTrace = null;
   let expectedValueBeforeTrace = "1234";
-  /*
-  var provider;
-  var web3;
-  var accounts;
-  var DebugContract;
-  var debugContract;
-  var source = fs.readFileSync(path.join(__dirname, "DebugContract.sol"), "utf8");
-  var expectedValueBeforeTrace = "1234";
 
-  before("init web3", function() {
-    const provider = Ganache.provider();
-    web3 = new Web3(provider);
-  });
-
-  before("get accounts", function() {
-    return web3.eth.getAccounts().then((accs) => {
-      accounts = accs;
-      console.log(accs);
-    });
-  });
-
-  before("compile source", async function() {
-    this.timeout(10000);
-    const { accounts } = services;
-    console.log(accounts);
-    var result = solc.compile({ sources: { "DebugContract.sol": source } }, 1);
-
-    var code = "0x" + result.contracts["DebugContract.sol:DebugContract"].bytecode;
-    var abi = JSON.parse(result.contracts["DebugContract.sol:DebugContract"].interface);
-
-    DebugContract = new web3.eth.Contract(abi);
-    DebugContract._code = code;
-
-    const instance = await DebugContract.deploy({ data: code });
-    debugContract = await instance.send({ from: accounts[0], gas });
-
-    // TODO: ugly workaround - not sure why this is necessary.
-    if (!debugContract._requestManager.provider) {
-      debugContract._requestManager.setProvider(web3.eth._provider);
-    }
-  });
-  */
-
-  before("set up transaction that should be traced", async function() {
+  before("set up transaction that should be traced", async() => {
     const { accounts, instance } = services;
     const debugValue = instance.methods.setValue(26);
     const { transactionHash } = await debugValue.send({ from: accounts[0], gas });
@@ -78,14 +29,14 @@ describe("Debug", function() {
     hashToTrace = transactionHash;
   });
 
-  before("change state of contract to ensure trace doesn't overwrite data", async function() {
+  before("change state of contract to ensure trace doesn't overwrite data", async() => {
     const { accounts, instance } = services;
     await instance.methods.setValue(expectedValueBeforeTrace).send({ from: accounts[0], gas });
     const value = await instance.methods.value().call({ from: accounts[0], gas });
     assert.strictEqual(value, expectedValueBeforeTrace);
   });
 
-  it("should trace a successful transaction without changing state", async function() {
+  it("should trace a successful transaction without changing state", async() => {
     const { web3 } = services;
     // We want to trace the transaction that sets the value to 26
     const method = "debug_traceTransaction";
