@@ -1,21 +1,13 @@
-var Web3 = require("web3");
 var assert = require("assert");
-var Ganache = require(process.env.TEST_BUILD
-  ? "../build/ganache.core." + process.env.TEST_BUILD + ".js"
-  : "../index.js");
+const { preloadWeb3 } = require("./helpers/preloadWeb3");
 
-describe("Ethereum", function(done) {
-  var web3 = new Web3();
-  var provider;
+describe("Ethereum", () => {
+  let services = preloadWeb3();
 
-  before("Initialize the provider", function() {
-    provider = Ganache.provider();
-    web3.setProvider(provider);
-  });
+  it.only("should get ethereum version (eth_protocolVersion)", async() => {
+    const { web3 } = await services;
 
-  it("should get ethereum version (eth_protocolVersion)", function() {
-    return web3.eth.getProtocolVersion().then((result) => {
-      assert.strictEqual(result, "63", "Network Version should be 63");
-    });
+    const result = await web3.eth.getProtocolVersion();
+    assert.strictEqual(result, "63", "Network Version should be 63");
   });
 });
