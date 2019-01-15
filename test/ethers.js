@@ -24,9 +24,9 @@ describe("ethers", async() => {
     const transaction = {
       nonce: 0,
       to: `0x${"35".repeat(20)}`,
-      gasPrice: 2 * 10 ** 10,
+      gasPrice: 2e10,
       gasLimit: 21000,
-      value: 10 ** 18,
+      value: 1e18,
       data: "",
       chainId: 1 // EIP 155 chainId - mainnet: 1, ropsten: 3
     };
@@ -43,9 +43,9 @@ describe("ethers", async() => {
     const transaction = {
       nonce: 1,
       to: `0x${"35".repeat(20)}`,
-      gasPrice: 2 * 10 ** 10,
+      gasPrice: 2e10,
       gasLimit: 21000,
-      value: 10 ** 18,
+      value: 1e18,
       data: ""
     };
     const signedTransaction = await wallet.sign(transaction);
