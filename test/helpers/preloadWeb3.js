@@ -3,7 +3,7 @@ const Ganache = require(process.env.TEST_BUILD
   : "../../index.js");
 const Web3 = require("web3");
 
-const preloadWeb3 = async(options = {}) => {
+const preloadWeb3 = (options = {}) => {
   let context = {};
   before("Setting up web3", async function() {
     this.timeout(10000);

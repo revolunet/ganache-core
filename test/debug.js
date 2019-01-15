@@ -71,6 +71,6 @@ describe("Debug", () => {
       "000000000000000000000000000000000000000000000000000000000000001f"
     );
 
-    // await debugContract.methods.value().call({ from: accounts[0], gas });
+    // await instance.methods.value().call({ from: accounts[0], gas });
   });
 });
