@@ -1,24 +1,11 @@
-var Web3 = require("web3");
-var assert = require("assert");
-var Ganache = require(process.env.TEST_BUILD
-  ? "../build/ganache.core." + process.env.TEST_BUILD + ".js"
-  : "../index.js");
+const assert = require("assert");
+const { preloadWeb3 } = require("./helpers/preloadWeb3");
 
-describe("Whisper", function(done) {
-  var web3 = new Web3();
-  var provider;
-
-  before("Initialize the provider", function() {
-    provider = Ganache.provider();
-    web3.setProvider(provider);
-  });
-
-  it("should call get whisper version (shh_version)", function() {
-    return web3.shh.getVersion(function(err, result) {
-      if (err) {
-        return done(err);
-      }
-      assert.strictEqual(result, "2", "Whisper version should be 2");
-    });
+describe("Whisper", () => {
+  const services = preloadWeb3();
+  it("should call get whisper version (shh_version)", async() => {
+    const { web3 } = services;
+    const result = await web3.shh.getVersion();
+    assert.strictEqual(result, "2", "Whisper version should be 2");
   });
 });

@@ -1,17 +1,18 @@
-var Web3 = require("web3");
-var Web3WsProvider = require("web3-providers-ws");
-var assert = require("assert");
-var Ganache = require(process.env.TEST_BUILD
+const Web3 = require("web3");
+const Web3WsProvider = require("web3-providers-ws");
+const assert = require("assert");
+const Ganache = require(process.env.TEST_BUILD
   ? "../build/ganache.core." + process.env.TEST_BUILD + ".js"
   : "../index.js");
-var fs = require("fs");
-var solc = require("solc");
+// const fs = require("fs");
+// const solc = require("solc");
+const { setUp } = require("./helpers/pretestSetup");
 
 // Thanks solc. At least this works!
 // This removes solc's overzealous uncaughtException event handler.
 process.removeAllListeners("uncaughtException");
 
-var logger = {
+const logger = {
   log: function(msg) {
     /* console.log(msg) */
   }
@@ -26,28 +27,34 @@ var logger = {
  */
 
 describe("Contract Deployed on Main Chain After Fork", function() {
-  var contract;
-  var contractAddress;
-  var forkedServer;
-  var mainAccounts;
+  const mainContract = "Example";
+  const contractFilenames = [];
+  const contractPath = "../contracts/examples/";
+  const options = {};
 
-  var forkedWeb3 = new Web3();
-  var mainWeb3 = new Web3();
+  const services = setUp(mainContract, contractFilenames, options, contractPath);
+
+  let contract;
+  let contractAddress;
+  let forkedServer;
+  // let mainAccounts;
+
+  let forkedWeb3 = new Web3();
+  let mainWeb3 = new Web3();
 
   var forkedTargetUrl = "ws://localhost:21345";
 
   before("set up test data", function() {
     this.timeout(10000);
-    var source = fs.readFileSync("./test/contracts/examples/Example.sol", { encoding: "utf8" });
-    var result = solc.compile(source, 1);
+    const { abi, bytecode, sources } = services;
 
     // Note: Certain properties of the following contract data are hardcoded to
     // maintain repeatable tests. If you significantly change the solidity code,
     // make sure to update the resulting contract data with the correct values.
     contract = {
-      solidity: source,
-      abi: result.contracts[":Example"].interface,
-      binary: "0x" + result.contracts[":Example"].bytecode,
+      solidity: sources,
+      abi,
+      binary: bytecode,
       position_of_value: "0x0000000000000000000000000000000000000000000000000000000000000000",
       expected_default_value: 5,
       call_data: {
@@ -65,7 +72,7 @@ describe("Contract Deployed on Main Chain After Fork", function() {
     };
   });
 
-  before("Initialize Fallback Ganache server", function(done) {
+  before("Initialize Fallback Ganache server", async function() {
     this.timeout(10000);
     forkedServer = Ganache.server({
       // Do not change seed. Determinism matters for these tests.
@@ -74,19 +81,14 @@ describe("Contract Deployed on Main Chain After Fork", function() {
       logger: logger
     });
 
-    forkedServer.listen(21345, function(err) {
-      if (err) {
-        return done(err);
-      }
-      done();
-    });
+    await forkedServer.listen(21345);
   });
 
-  before("set forkedWeb3 provider", function() {
+  before("set forkedWeb3 provider", () => {
     forkedWeb3.setProvider(new Web3WsProvider(forkedTargetUrl));
   });
 
-  before("Set main web3 provider, forking from forked chain at this point", function() {
+  before("Set main web3 provider, forking from forked chain at this point", () => {
     mainWeb3.setProvider(
       Ganache.provider({
         fork: forkedTargetUrl.replace("ws", "http"),
@@ -99,32 +101,37 @@ describe("Contract Deployed on Main Chain After Fork", function() {
     );
   });
 
+  /*
   before("Gather main accounts", async function() {
     this.timeout(5000);
     mainAccounts = await mainWeb3.eth.getAccounts();
   });
+  */
 
   before("Deploy initial contract", async function() {
-    const receipt = await mainWeb3.eth.sendTransaction({
-      from: mainAccounts[0],
+    const { accounts, web3 } = services;
+
+    const receipt = await web3.eth.sendTransaction({
+      from: accounts[0],
       data: contract.binary,
       gas: 3141592,
-      value: mainWeb3.utils.toWei("1", "ether")
+      value: web3.utils.toWei("1", "ether")
     });
 
     contractAddress = receipt.contractAddress;
 
     // Ensure there's *something* there.
-    const code = await mainWeb3.eth.getCode(contractAddress);
+    const code = await web3.eth.getCode(contractAddress);
     assert.notStrictEqual(code, null);
     assert.notStrictEqual(code, "0x");
     assert.notStrictEqual(code, "0x0");
   });
 
   it("should send 1 ether to the created contract, checked on the forked chain", async function() {
-    const balance = await mainWeb3.eth.getBalance(contractAddress);
+    const { web3 } = services;
+    const balance = await web3.eth.getBalance(contractAddress);
 
-    assert.strictEqual(balance, mainWeb3.utils.toWei("1", "ether"));
+    assert.strictEqual(balance, web3.utils.toWei("1", "ether"));
   });
 
   after("Shutdown server", function(done) {
