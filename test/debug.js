@@ -1,6 +1,6 @@
 const assert = require("assert");
 const { send } = require("./helpers/rpc");
-const { setUp } = require("./helpers/pretestSetup");
+const bootstrap = require("./helpers/bootstrap");
 
 // Thanks solc. At least this works!
 // This removes solc's overzealous uncaughtException event handler.
@@ -12,7 +12,7 @@ describe("Debug", () => {
   const contractPath = "../contracts/debug/";
   const options = {};
 
-  const services = setUp(mainContract, contractFilenames, options, contractPath);
+  const services = bootstrap(mainContract, contractFilenames, options, contractPath);
 
   const gas = 3141592;
   let hashToTrace = null;

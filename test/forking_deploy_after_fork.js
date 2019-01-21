@@ -6,7 +6,7 @@ const Ganache = require(process.env.TEST_BUILD
   : "../index.js");
 // const fs = require("fs");
 // const solc = require("solc");
-const { setUp } = require("./helpers/pretestSetup");
+const bootstrap = require("./helpers/bootstrap");
 
 // Thanks solc. At least this works!
 // This removes solc's overzealous uncaughtException event handler.
@@ -32,7 +32,7 @@ describe("Contract Deployed on Main Chain After Fork", function() {
   const contractPath = "../contracts/examples/";
   const options = {};
 
-  const services = setUp(mainContract, contractFilenames, options, contractPath);
+  const services = bootstrap(mainContract, contractFilenames, options, contractPath);
 
   let contract;
   let contractAddress;

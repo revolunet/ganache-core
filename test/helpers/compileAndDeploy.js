@@ -18,7 +18,7 @@ async function compile(mainContractName, contractFileNames = [], contractPath) {
 
   const sources = Object.assign({}, ...contractSources);
 
-  // Second parameter of `1` configures solc for opitimized compiling
+  // Second parameter configures solc to optimize compiled code
   const { contracts } = solc.compile({ sources }, 1);
 
   const _mainContractName = mainContractName.replace(/\.sol$/i, "");
@@ -38,13 +38,12 @@ async function compile(mainContractName, contractFileNames = [], contractPath) {
  * @param {String} abi  contract ABI
  * @param {String} bytecode  contract bytecode
  * @param {Object} web3 Web3 interface
- * @returns {Object} context: abi, accounts, bytecode, contract, instance, sources
+ * @returns {Object} context: abi, accounts, bytecode, contract, instance
  */
-async function deploy(abi, bytecode, sources, web3) {
+async function deploy(abi, bytecode, web3) {
+  const testAssets = [web3.eth.getAccounts(), web3.eth.getBlock("latest")];
+  const [accounts, { gasLimit }] = await Promise.all(testAssets);
   const contract = new web3.eth.Contract(abi);
-
-  const accounts = await web3.eth.getAccounts();
-  const { gasLimit } = await web3.eth.getBlock("latest");
   const instance = await contract.deploy({ data: bytecode }).send({ from: accounts[0], gas: gasLimit });
 
   return {
@@ -52,8 +51,7 @@ async function deploy(abi, bytecode, sources, web3) {
     accounts,
     bytecode,
     contract,
-    instance,
-    sources
+    instance
   };
 }
 
@@ -67,7 +65,9 @@ async function deploy(abi, bytecode, sources, web3) {
  */
 async function compileAndDeploy(mainContractName, contractFileNames = [], contractPath, web3) {
   const { abi, bytecode, sources } = await compile(mainContractName, contractFileNames, contractPath);
-  return deploy(abi, bytecode, sources, web3);
+  const context = await deploy(abi, bytecode, web3);
+  Object.assign(context, { sources });
+  return context;
 }
 
 module.exports = {
