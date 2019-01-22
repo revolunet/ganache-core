@@ -3,10 +3,10 @@ const Web3WsProvider = require("web3-providers-ws");
 const assert = require("assert");
 const Ganache = require(process.env.TEST_BUILD
   ? "../build/ganache.core." + process.env.TEST_BUILD + ".js"
-  : "../index.js");
+  : "../../index.js");
 // const fs = require("fs");
 // const solc = require("solc");
-const bootstrap = require("./helpers/contract/bootstrap");
+const bootstrap = require("../helpers/contract/bootstrap");
 
 // Thanks solc. At least this works!
 // This removes solc's overzealous uncaughtException event handler.

@@ -1,6 +1,6 @@
 var Ganache = require(process.env.TEST_BUILD
   ? "../build/ganache.core." + process.env.TEST_BUILD + ".js"
-  : "../index.js");
+  : "../../index.js");
 var solc = require("solc");
 var Web3 = require("web3");
 var fs = require("fs");
@@ -38,7 +38,7 @@ describe("Forking using a Provider", function() {
 
   before("set up test data", function() {
     this.timeout(5000);
-    var source = fs.readFileSync("./test/contracts/examples/Example.sol", { encoding: "utf8" });
+    var source = fs.readFileSync("../test/contracts/examples/Example.sol", { encoding: "utf8" });
     var result = solc.compile(source, 1);
 
     // Note: Certain properties of the following contract data are hardcoded to

@@ -3,10 +3,10 @@ var Web3WsProvider = require("web3-providers-ws");
 var assert = require("assert");
 var Ganache = require(process.env.TEST_BUILD
   ? "../build/ganache.core." + process.env.TEST_BUILD + ".js"
-  : "../index.js");
+  : "../../index.js");
 var fs = require("fs");
 var solc = require("solc");
-var to = require("../lib/utils/to.js");
+var to = require("../../lib/utils/to.js");
 var async = require("async");
 
 // Thanks solc. At least this works!
@@ -49,7 +49,7 @@ describe("Forking", function() {
 
   before("set up test data", function() {
     this.timeout(10000);
-    var source = fs.readFileSync("./test/contracts/examples/Example.sol", { encoding: "utf8" });
+    var source = fs.readFileSync("../test/contracts/examples/Example.sol", { encoding: "utf8" });
     var result = solc.compile(source, 1);
 
     // Note: Certain properties of the following contract data are hardcoded to
@@ -454,7 +454,7 @@ describe("Forking", function() {
       " providing forked block hash and number",
     function() {
       this.timeout(10000);
-      var oracleSol = fs.readFileSync("./test/Oracle.sol", { encoding: "utf8" });
+      var oracleSol = fs.readFileSync("../test/Oracle.sol", { encoding: "utf8" });
       var solcResult = solc.compile(oracleSol);
       var oracleOutput = solcResult.contracts[":Oracle"];
 
