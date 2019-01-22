@@ -1,9 +1,9 @@
 var Web3 = require("web3");
 var Ganache = require(process.env.TEST_BUILD
   ? "../build/ganache.core." + process.env.TEST_BUILD + ".js"
-  : "../index.js");
+  : "../../index.js");
 var assert = require("assert");
-var to = require("../lib/utils/to.js");
+var to = require("../../lib/utils/to.js");
 
 describe("Transaction Ordering", function() {
   var accounts;

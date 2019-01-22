@@ -1,16 +1,16 @@
 const Web3 = require("web3");
 const BN = Web3.utils.BN;
 const Web3WsProvider = require("web3-providers-ws");
-const Transaction = require("../lib/utils/transaction");
+const Transaction = require("../../lib/utils/transaction");
 const BlockHeader = require("ethereumjs-block/header");
 const utils = require("ethereumjs-util");
 const assert = require("assert");
 const Ganache = require(process.env.TEST_BUILD
   ? "../build/ganache.core." + process.env.TEST_BUILD + ".js"
-  : "../index.js");
+  : "../../index.js");
 const solc = require("solc");
 const fs = require("fs");
-const to = require("../lib/utils/to");
+const to = require("../../lib/utils/to");
 const _ = require("lodash");
 const pify = require("pify");
 

@@ -1,11 +1,11 @@
 var Web3 = require("web3");
 var Ganache = require(process.env.TEST_BUILD
   ? "../build/ganache.core." + process.env.TEST_BUILD + ".js"
-  : "../index.js");
+  : "../../index.js");
 var fs = require("fs");
 var path = require("path");
 var solc = require("solc");
-var to = require("../lib/utils/to");
+var to = require("../../lib/utils/to");
 
 // Thanks solc. At least this works!
 // This removes solc's overzealous uncaughtException event handler.
@@ -25,7 +25,7 @@ describe("Transaction rejection", function() {
   var estimateGasContractAbi;
   var EstimateGasContract;
   var estimateGasContractAddress;
-  var source = fs.readFileSync(path.join(__dirname, "EstimateGas.sol"), "utf8");
+  var source = fs.readFileSync(path.join(__dirname, "/../EstimateGas.sol"), "utf8");
 
   before("get accounts", function(done) {
     web3.eth.getAccounts(function(err, accs) {
