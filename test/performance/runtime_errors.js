@@ -2,11 +2,11 @@ var Web3 = require("web3");
 var assert = require("assert");
 var Ganache = require(process.env.TEST_BUILD
   ? "../build/ganache.core." + process.env.TEST_BUILD + ".js"
-  : "../index.js");
+  : "../../index.js");
 var fs = require("fs");
 var path = require("path");
 var solc = require("solc");
-var to = require("../lib/utils/to");
+var to = require("../../lib/utils/to");
 
 // Thanks solc. At least this works!
 // This removes solc's overzealous uncaughtException event handler.
@@ -29,7 +29,7 @@ function runTests(web3, provider, extraTests) {
   before("compile source", function(done) {
     this.timeout(10000);
 
-    var source = fs.readFileSync(path.join(__dirname, "RuntimeError.sol"), "utf8");
+    var source = fs.readFileSync(path.join(__dirname, "/../RuntimeError.sol"), "utf8");
     var result = solc.compile({ sources: { "RuntimeError.sol": source } }, 1);
 
     testState.code = "0x" + result.contracts["RuntimeError.sol:RuntimeError"].bytecode;

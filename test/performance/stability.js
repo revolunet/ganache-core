@@ -4,7 +4,7 @@ var assert = require("assert-match");
 var matchers = require("assert-match/matchers");
 var Ganache = require(process.env.TEST_BUILD
   ? "../build/ganache.core." + process.env.TEST_BUILD + ".js"
-  : "../index.js");
+  : "../../index.js");
 var utils = require("ethereumjs-util");
 var pify = require("pify");
 

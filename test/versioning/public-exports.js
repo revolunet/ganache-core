@@ -1,6 +1,6 @@
 const Ganache = require(process.env.TEST_BUILD
   ? "../build/ganache.core." + process.env.TEST_BUILD + ".js"
-  : "../index.js");
+  : "../../index.js");
 const assert = require("assert");
 
 describe("BuildType", () => {

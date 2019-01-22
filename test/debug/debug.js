@@ -1,6 +1,6 @@
 const assert = require("assert");
-const { send } = require("./helpers/utils/rpc");
-const bootstrap = require("./helpers/contract/bootstrap");
+const { send } = require("../helpers/utils/rpc");
+const bootstrap = require("../helpers/contract/bootstrap");
 
 // Thanks solc. At least this works!
 // This removes solc's overzealous uncaughtException event handler.
