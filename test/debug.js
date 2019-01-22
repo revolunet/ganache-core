@@ -1,6 +1,6 @@
 const assert = require("assert");
-const { send } = require("./helpers/rpc");
-const bootstrap = require("./helpers/bootstrap");
+const { send } = require("./helpers/utils/rpc");
+const bootstrap = require("./helpers/contract/bootstrap");
 
 // Thanks solc. At least this works!
 // This removes solc's overzealous uncaughtException event handler.
@@ -9,7 +9,7 @@ process.removeAllListeners("uncaughtException");
 describe("Debug", () => {
   const mainContract = "DebugContract";
   const contractFilenames = [];
-  const contractPath = "../contracts/debug/";
+  const contractPath = "../../contracts/debug/";
   const options = {};
 
   const services = bootstrap(mainContract, contractFilenames, options, contractPath);

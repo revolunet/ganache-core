@@ -11,7 +11,7 @@ const pify = require("pify");
 const RSCLEAR_REFUND = 15000;
 const RSCLEAR_REFUND_FOR_RESETTING_DIRTY_SLOT_TO_ZERO = 19800;
 const RSELFDESTRUCT_REFUND = 24000;
-const { sleep } = require("./helpers/utils");
+const { sleep } = require("./helpers/utils/utils");
 
 // Thanks solc. At least this works!
 // This removes solc's overzealous uncaughtException event handler.

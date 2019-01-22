@@ -1,6 +1,6 @@
 const assert = require("assert");
 const to = require("../../lib/utils/to.js");
-const { preloadWeb3 } = require("../helpers/preloadWeb3");
+const preloadWeb3 = require("../helpers/web3/preloadWeb3");
 
 describe("options:gasLimit", () => {
   const mnemonic = "candy maple cake sugar pudding cream honey rich smooth crumble sweet treat";

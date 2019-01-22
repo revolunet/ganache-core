@@ -1,5 +1,5 @@
 const assert = require("assert");
-const bootstrap = require("./helpers/bootstrap");
+const bootstrap = require("./helpers/contract/bootstrap");
 
 // Thanks solc. At least this works!
 // This removes solc's overzealous uncaughtException event handler.
@@ -10,7 +10,7 @@ const contract = {};
 describe("Block Tags", () => {
   const mainContract = "Example";
   const contractFilenames = [];
-  const contractPath = "../contracts/examples/";
+  const contractPath = "../../contracts/examples/";
   const options = {};
 
   const services = bootstrap(mainContract, contractFilenames, options, contractPath);

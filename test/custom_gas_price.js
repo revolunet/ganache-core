@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { getWeb3 } = require("./helpers/getWeb3");
+const getWeb3 = require("./helpers/web3/getWeb3");
 
 describe("Custom Gas Price", () => {
   it("should return gas price of 15 when specified as a decimal", async() => {

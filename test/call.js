@@ -1,5 +1,5 @@
 const assert = require("assert");
-const bootstrap = require("./helpers/bootstrap");
+const bootstrap = require("./helpers/contract/bootstrap");
 
 // Thanks solc. At least this works!
 // This removes solc's overzealous uncaughtException event handler.
@@ -8,7 +8,7 @@ process.removeAllListeners("uncaughtException");
 describe("eth_call", () => {
   const mainContract = "EstimateGas";
   const contractFilenames = [];
-  const contractPath = "../contracts/call/";
+  const contractPath = "../../contracts/call/";
   const options = {};
 
   const services = bootstrap(mainContract, contractFilenames, options, contractPath);

@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { preloadWeb3 } = require("./helpers/preloadWeb3");
+const preloadWeb3 = require("./helpers/web3/preloadWeb3");
 
 describe("Swarm", () => {
   const services = preloadWeb3();

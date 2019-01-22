@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { getWeb3 } = require("./helpers/getWeb3");
+const getWeb3 = require("./helpers/web3/getWeb3");
 
 describe("Custom Gas Limit", () => {
   it("The block should show the correct custom Gas Limit", async() => {

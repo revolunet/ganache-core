@@ -1,6 +1,6 @@
 const Ganache = require(process.env.TEST_BUILD
   ? "../build/ganache.core." + process.env.TEST_BUILD + ".js"
-  : "../../index.js");
+  : "../../../index.js");
 const Web3 = require("web3");
 
 const preloadWeb3 = (options = {}) => {
@@ -21,6 +21,4 @@ const preloadWeb3 = (options = {}) => {
   return context;
 };
 
-module.exports = {
-  preloadWeb3
-};
+module.exports = preloadWeb3;
