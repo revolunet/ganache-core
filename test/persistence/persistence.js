@@ -1,6 +1,6 @@
 const Ganache = require(process.env.TEST_BUILD
   ? "../build/ganache.core." + process.env.TEST_BUILD + ".js"
-  : "../index.js");
+  : "../../index.js");
 const { readFileSync } = require("fs");
 const temp = require("temp").track();
 const { compile } = require("solc");
@@ -8,7 +8,7 @@ const memdown = require("memdown");
 const { join } = require("path");
 const assert = require("assert");
 const Web3 = require("web3");
-const { generateSend } = require("./helpers/utils/utils");
+const { generateSend } = require("../helpers/utils/utils");
 
 // Thanks solc. At least this works!
 // This removes solc's overzealous uncaughtException event handler.
@@ -229,7 +229,7 @@ describe("Custom DB", function() {
 describe("Regression test DB", function() {
   // Don't change these options, we need these to match the saved chain in ./test/testdb
   const db = memdown();
-  const dbPath = join(__dirname, "/testdb");
+  const dbPath = join(__dirname, "../testdb");
   const mnemonic = "candy maple cake sugar pudding cream honey rich smooth crumble sweet treat";
   const time = new Date("2009-01-03T18:15:05+00:00");
   const networkId = "1337";

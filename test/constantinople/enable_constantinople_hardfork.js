@@ -2,7 +2,7 @@ const assert = require("assert");
 const Web3 = require("web3");
 const Ganache = require(process.env.TEST_BUILD
   ? "../build/ganache.core." + process.env.TEST_BUILD + ".js"
-  : "../index.js");
+  : "../../index.js");
 const fs = require("fs");
 const path = require("path");
 const solc = require("solc");
@@ -21,7 +21,7 @@ describe("Constantinople Hardfork", function() {
     let result = solc.compile(
       {
         sources: {
-          "ConstantinopleContract.sol": fs.readFileSync(path.join(__dirname, "ConstantinopleContract.sol"), "utf8")
+          "ConstantinopleContract.sol": fs.readFileSync(path.join(__dirname, "/../ConstantinopleContract.sol"), "utf8")
         }
       },
       1

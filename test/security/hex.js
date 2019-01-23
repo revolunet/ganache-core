@@ -1,7 +1,7 @@
 const assert = require("assert");
-const to = require("../lib/utils/to.js");
-const preloadWeb3 = require("./helpers/web3/preloadWeb3");
-const { send } = require("./helpers/utils/rpc");
+const to = require("../../lib/utils/to.js");
+const preloadWeb3 = require("../helpers/web3/preloadWeb3");
+const { send } = require("../helpers/utils/rpc");
 
 describe("to.rpcQuantityHexString", () => {
   it("should print '0x0' for input '0x'", () => {

@@ -1,5 +1,7 @@
 var BN = require("bn.js");
-var Ganache = require("../");
+const Ganache = require(process.env.TEST_BUILD
+  ? "../build/ganache.core." + process.env.TEST_BUILD + ".js"
+  : "../../index.js");
 var Web3 = require("web3");
 var assert = require("assert");
 
