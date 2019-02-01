@@ -4,7 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/trufflesuite/ganache-core/badge.svg?branch=develop)](https://coveralls.io/github/trufflesuite/ganache-core?branch=develop)
 # Ganache Core
 
-This is the core code that powers the Ganache application and the the Ganache command line tool.
+This is the core code that powers the Ganache application and the Ganache command line tool.
 
 # INSTALLATION
 
